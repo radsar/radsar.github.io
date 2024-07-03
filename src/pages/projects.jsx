@@ -24,10 +24,48 @@ import {
 const asOf = () => formatDate(new Date());
 
 export async function getStaticProps() {
-  const stats = await fetch('https://osstats.opensource.comcast.net/stats')
-    .then((response) => response.json());
+  // const stats = await fetch('https://osstats.opensource.comcast.net/stats')
+  //   .then((response) => response.json());
 
-  return stats;
+  // return stats;
+
+  let stats;
+
+  try {
+    const response = await fetch('https://osstats.opensource.comcast.net/stats');
+    stats = await response?.json();
+  } catch (error) {
+    console.error('Error fetching stats:', error);
+    stats = {};
+  }
+
+  // Ensure that all fields are defined and handle undefined values
+  const {
+    allRepos = [],
+    newRepos = [],
+    updateRepos = [],
+    mostStarred = [],
+    mostForked = [],
+    totalRepos = 0,
+    totalSourceRepos = 0,
+    totalForkedRepos = 0,
+    totalMembers = 0,
+  } = stats;
+
+  return {
+    props: {
+      staticToday: asOf(), // Assuming `asOf` returns a formatted date
+      allRepos,
+      newRepos,
+      updateRepos,
+      mostStarred,
+      mostForked,
+      totalRepos,
+      totalSourceRepos,
+      totalForkedRepos,
+      totalMembers,
+    },
+  };
 }
 
 const Projects = ({
