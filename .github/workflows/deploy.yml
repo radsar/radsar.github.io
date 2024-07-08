@@ -35,6 +35,12 @@ jobs:
           npm run publishsitemap
           touch docs/.nojekyll
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: docs  # adjust this to your build output directory
+
       - name: Deploy
         run: npm run deploy
         env:
