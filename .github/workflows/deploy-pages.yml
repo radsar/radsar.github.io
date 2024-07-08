@@ -16,11 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set Git identity
-        run: |
-          git config --global user.email "kavi.radsar@gmail.com"
-          git config --global user.name "radsar"
-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
